@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Department, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'has name' do
+    Department.create!(name: 'This is test')
+    expect(Department.last.name).to eq 'This is test'
+  end
 end
