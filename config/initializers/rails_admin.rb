@@ -12,10 +12,10 @@ RailsAdmin.config do |config|
     redirect_to main_app.root_path unless warden.user.admin == true
   end
 
-
+  #config.association_select_models_number_limit = 500
   ## == Cancan ==
   # config.authorize_with :cancan
-
+  config.default_associated_collection_limit = 500
   ## == Pundit ==
   # config.authorize_with :pundit
 
@@ -27,7 +27,7 @@ RailsAdmin.config do |config|
   ## == Gravatar integration ==
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar true
-  
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory

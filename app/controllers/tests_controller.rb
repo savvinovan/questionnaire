@@ -5,6 +5,30 @@ class TestsController < ApplicationController
   end
 
   def take
+    @question = current_user.departments.first.questions.paginate(:page => params[:page], :per_page => 1)
+    if params.include?(:result)
+      res = result_params.merge("department_id" => current_user.departments.first.id, "user_id" => current_user.id )
+      if res['id'].to_i > 0
+        r = Result.find(res['id'])
+        if r.update(res)
+        else
+          flash[:error] = 'Нужно заполнить комментарий'
+          redirect_to tests_take_path + '?page=' + (@question.current_page - 1).to_s
+        end
+      else
+        r = Result.new(res)
+        if r.save
+        else
+          flash[:error] = 'Нужно заполнить комментарий'
+          redirect_to tests_take_path + '?page=' + (@question.current_page - 1).to_s
+        end
+      end
+    end
+    @result = Result.where(question_id: @question.first.id, user_id: current_user.id).last
+    @result ||= Result.new
+    if @question.current_page > @question.total_pages
+      render template: 'common/success.html.erb'
+    end
   end
 
   def intro
@@ -15,4 +39,8 @@ class TestsController < ApplicationController
   def results
   end
 
+  private
+  def result_params
+    params.require(:result).permit(:text, :question_id, :id)
+  end
 end

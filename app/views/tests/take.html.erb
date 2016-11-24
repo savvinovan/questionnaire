@@ -1,2 +1,38 @@
-<h1>Tests#take</h1>
-<p>Find me in app/views/tests/take.html.erb</p>
+<div class="container">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="text-center well">
+      <h3>
+        <%= @question.first.name %>.
+        <%= @question.first.text %>
+      </h3>
+    </div>
+
+    <%= form_for @result, url: (tests_take_path + '?page=' + (@question.current_page + 1).to_s), method: 'post' do |f| %>
+      <div class="form-group">
+        <%= f.label :text, 'Комментарии к ответу' %>
+        <%= f.text_area :text, size: '100x10', class: 'form-control' %>
+      </div>
+      <%= f.hidden_field :question_id, value: @question.first.id %>
+      <%= f.hidden_field :id %>
+      <% if @question.current_page == @question.total_pages %>
+        <div class="form-group text-center">
+          <%= f.submit 'Завершить анкету', class:'btn btn-success' %>
+        </div>
+      <% else %>
+        <div class="form-group text-center">
+          <%= f.submit 'Следующий вопрос', class:'btn btn-success' %>
+        </div>
+      <% end %>
+    <% end %>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= progress(@question) %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= progress(@question) %>%">
+      </div>
+    </div>
+    <div class="text-center">
+      <%= will_paginate @question %>
+    </div>
+    <div class="test">
+      <%= @yoyo %>
+    </div>
+  </div>
+</div>
