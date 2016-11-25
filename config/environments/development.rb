@@ -35,7 +35,7 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-
+  config.i18n.default_locale = :ru
   BetterErrors::Middleware.allow_ip! '10.15.64.6'
   config.action_mailer.default_url_options = { host: '0.0.0.0', port: 80 }
   # Raises error for missing translations

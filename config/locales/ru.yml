@@ -1,0 +1,11 @@
+ru:
+  will_paginate:
+    previous_label: 'Предыдущий вопрос'
+    next_label: 'Следующий вопрос'
+    page_gap: '....'
+  activerecord:
+    models:
+      result: "Результат"
+      question: "Вопрос"
+      department: 'Подразделение'
+      user_info: 'Информация о пользователе'

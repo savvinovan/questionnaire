@@ -13,7 +13,11 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails_admin'
 gem 'devise'
+gem 'rails-i18n'
+gem 'devise-i18n'
+gem 'rails_admin-i18n'
 gem 'will_paginate'
+gem 'axlsx_rails'
 group :development, :test do
   gem 'byebug'
   gem 'better_errors'

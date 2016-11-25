@@ -27,8 +27,16 @@ RSpec.feature "test page", :type => :feature do
     login_as user_with_department
     visit tests_take_path
     fill_in 'result_text', with: Faker::Lorem.sentence
-    click_button 'Следующий вопрос'
+    click_button 'Сохранить ответ'
     expect(current_path).to eq tests_take_path
     expect(page).to_not have_text('Нужно заполнить комментарий')
+  end
+  scenario "Test filled with blank comment and submitted" do
+    login_as user_with_department
+    visit tests_take_path
+    fill_in 'result_text', with: ' '
+    click_button 'Сохранить ответ'
+    expect(current_path).to eq tests_take_path
+    expect(page).to have_text('Нужно заполнить комментарий')
   end
 end

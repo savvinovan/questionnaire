@@ -1,5 +1,19 @@
 <div class="container">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-3">
+    <% if @other_results.count > 0 %>
+    <strong>Ответы других подразделений:</strong>
+    <br><br>
+    <% end %>
+    <% @other_results.each do |oth_res| %>
+      <div class="well">
+        <p><strong><%= @deps.find(oth_res.department_id).name %></strong></p>
+        <%= oth_res.text %>
+      </div>
+
+
+    <% end %>
+  </div>
+  <div class="col-md-6">
     <div class="text-center well">
       <h3>
         <%= @question.first.name %>.
@@ -20,7 +34,7 @@
         </div>
       <% else %>
         <div class="form-group text-center">
-          <%= f.submit 'Следующий вопрос', class:'btn btn-success' %>
+          <%= f.submit 'Сохранить ответ', class:'btn btn-success' %>
         </div>
       <% end %>
     <% end %>

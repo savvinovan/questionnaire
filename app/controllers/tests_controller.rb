@@ -4,6 +4,16 @@ class TestsController < ApplicationController
   def index
   end
 
+  def export_excel
+    @results = Result.all
+    @questions = Question.order('name ASC')
+    @departments = Department.order('name ASC')
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
+  end
+
   def take
     @question = current_user.departments.first.questions.paginate(:page => params[:page], :per_page => 1)
     if params.include?(:result)
@@ -24,6 +34,8 @@ class TestsController < ApplicationController
         end
       end
     end
+    @other_results = Result.where(question_id: @question.first.id)
+    @deps = Department.all
     @result = Result.where(question_id: @question.first.id, user_id: current_user.id).last
     @result ||= Result.new
     if @question.current_page > @question.total_pages

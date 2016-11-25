@@ -1,0 +1,18 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Результаты анкетирования") do |sheet|
+  arr = ['Подразделения\#']
+  @questions.each do |q|
+    arr << q.name
+  end
+  sheet.add_row arr
+  @departments.each do |department|
+    results_row = []
+    results_row << department.name
+    @questions.each do |question|
+      res = @results.where(question_id: question.id, department_id: department.id).first
+      res ||= {:text => ''}
+      results_row << res[:text]
+    end
+    sheet.add_row results_row
+  end
+end

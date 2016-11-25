@@ -5,8 +5,11 @@ Rails.application.routes.draw do
   get 'tests/take', to: 'tests#take', as: 'tests_take'
   post 'tests/take', to: 'tests#take', as: 'tests_take_post'
   get 'tests/intro', to: 'tests#intro', as: 'tests_intro'
+  get 'tests/export_excel', to: 'tests#export_excel', as: 'tests_export_excel'
   get 'home/index', to: 'home#index'
   post 'tests/create_user_info', to: 'user_infos#create', as: 'create_user_info'
+
+
 
   devise_for :users
   root 'tests#index'
