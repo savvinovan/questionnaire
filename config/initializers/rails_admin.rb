@@ -9,7 +9,11 @@ RailsAdmin.config do |config|
   # config.current_user_method(&:current_user)
 
   config.authorize_with do
-    redirect_to main_app.root_path unless warden.user.admin == true
+    if current_user == nil
+      redirect_to main_app.root_path
+    else
+      redirect_to main_app.root_path unless current_user.try(:admin?)
+    end
   end
 
   #config.association_select_models_number_limit = 500

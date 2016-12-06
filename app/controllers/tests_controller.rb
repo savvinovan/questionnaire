@@ -16,6 +16,7 @@ class TestsController < ApplicationController
 
   def take
     @question = current_user.departments.first.questions.paginate(:page => params[:page], :per_page => 1)
+    #POST
     if params.include?(:result)
       res = result_params.merge("department_id" => current_user.departments.first.id, "user_id" => current_user.id )
       if res['id'].to_i > 0
@@ -24,6 +25,7 @@ class TestsController < ApplicationController
         else
           flash[:error] = 'Нужно заполнить комментарий'
           redirect_to tests_take_path + '?page=' + (@question.current_page - 1).to_s
+          return
         end
       else
         r = Result.new(res)
@@ -31,15 +33,31 @@ class TestsController < ApplicationController
         else
           flash[:error] = 'Нужно заполнить комментарий'
           redirect_to tests_take_path + '?page=' + (@question.current_page - 1).to_s
+          return
         end
       end
+    else
+
     end
-    @other_results = Result.where(question_id: @question.first.id)
-    @deps = Department.all
-    @result = Result.where(question_id: @question.first.id, user_id: current_user.id).last
-    @result ||= Result.new
-    if @question.current_page > @question.total_pages
+    #GET
+
+
+    #last page
+    if (@question.first == nil)
+      flash[:notice] = 'Тест завершен'
+      redirect_to tests_intro_path
+    else
+
+    if (@question.current_page > @question.total_pages)
       render template: 'common/success.html.erb'
+    else
+      @other_results = Result.where(question_id: @question.first.id)
+      @deps = Department.all
+      @result = Result.where(question_id: @question.first.id, user_id: current_user.id).last
+      @result ||= Result.new
+    end
+
+
     end
   end
 
@@ -53,6 +71,6 @@ class TestsController < ApplicationController
 
   private
   def result_params
-    params.require(:result).permit(:text, :question_id, :id)
+    params.require(:result).permit(:text, :question_id, :id, :attachment)
   end
 end

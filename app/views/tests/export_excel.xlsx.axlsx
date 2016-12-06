@@ -11,6 +11,11 @@ wb.add_worksheet(name: "Результаты анкетирования") do |sh
     @questions.each do |question|
       res = @results.where(question_id: question.id, department_id: department.id).first
       res ||= {:text => ''}
+      if (res[:text] != '')
+        if res.attachment.url != '/attachments/original/missing.png'
+          res[:text] = res[:text] + ' http://assc.s-vfu.ru' + res.attachment.url
+        end
+      end
       results_row << res[:text]
     end
     sheet.add_row results_row

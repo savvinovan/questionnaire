@@ -18,6 +18,7 @@ gem 'devise-i18n'
 gem 'rails_admin-i18n'
 gem 'will_paginate'
 gem 'axlsx_rails'
+gem "paperclip"
 group :development, :test do
   gem 'byebug'
   gem 'better_errors'
